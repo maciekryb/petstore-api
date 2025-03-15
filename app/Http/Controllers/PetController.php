@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
-
     public function __construct(private PetService $petService) {}
 
     public function index()
@@ -44,12 +43,23 @@ class PetController extends Controller
             'tag_id.integer' => 'Wskazana tag nie istnieje.',
         ]);
 
+        logger("po walidacji");
+        logger($validated);
+
         $response = $this->petService->store($validated);
-        logger($response);
         if ($response) {
-            return redirect()->route('pet.index')->with('success', 'Pet added successfully');
+            return redirect()->back()->with([
+                'success' => 'Zwierzak dodany pomyślnie',
+                'responseJson' => json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+            ]);
         } else {
             return redirect()->back()->withInput()->with('error', 'Wystąpił błąd w zewnętrznej usłudze, prosze spróbować później');
         }
+    }
+
+    public function clearSession()
+    {
+        session()->forget(['responseJson', 'success']);
+        return redirect()->route('pets.create');
     }
 }
