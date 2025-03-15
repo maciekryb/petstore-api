@@ -11,7 +11,6 @@ class PetService
 
     public function store($data)
     {
-
         $preparedData =  [
             // 'id' => $data['id'],
             'name' => $data['name'],
@@ -19,12 +18,14 @@ class PetService
             //     'id' => $data['category_id'],
             //     'name' => $this->getCategoryName($data['category_id']),
             // ],
-            'photoUrls' => $data['photoUrls'],
+            'photoUrls' => explode(',', $data['photoUrls']),
             // 'tags' => $tags,  // Zmieniliśmy na tablicę z tagiem
             // 'status' => $data['status'],
         ];
 
-        $response = $this->petApiClient->store($data);
+
+
+        $response = $this->petApiClient->store($preparedData);
         return $response;
     }
 }
