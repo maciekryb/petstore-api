@@ -25,4 +25,16 @@ class PetDataService
     {
         return self::$tags;
     }
+
+    public function getCategoryName(int $id): string
+    {
+        $category = collect(self::$categories)->firstWhere('id', $id);
+        return $category['name'] ?? '';
+    }
+
+    public function getTagName(int $id): string
+    {
+        $tag = collect(self::$tags)->firstWhere('id', $id);
+        return $tag['name'] ?? '';
+    }
 }
