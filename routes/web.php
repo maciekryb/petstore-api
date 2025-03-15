@@ -21,3 +21,5 @@ Route::get('/pets/{id}/edit', [PetController::class, 'edit']);
 Route::put('/pets/{id}', [PetController::class, 'update']);
 //Form to delete pet by id
 Route::delete('/pets/{id}', [PetController::class, 'destroy']);
+//Clear session
+Route::post('/pets/clear-session', [PetController::class, 'clearSession'])->name('pets.clearSession');
