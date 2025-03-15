@@ -57,6 +57,26 @@ class PetController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        $validated = validator(['identificationNumber' => $id], [
+            'identificationNumber' => 'required|integer',
+        ], [
+            'identificationNumber.required' => 'Numer identyfikacyjny jest wymagany.',
+            'identificationNumber.integer' => 'Wskazany numer identyfikacyjny musi być liczbą.',
+        ])->validate();
+
+        $response = $this->petService->getById($validated['identificationNumber']);
+        if ($response) {
+            return view('pets/show', [
+                'success' => 'Zwierzak znaleziony pomyślnie',
+                'responseJson' => $response
+            ]);
+        } else {
+            return view('pets/show', ['error' => 'Nie znaleziono zwierzaka o podanym numerze identyfikacyjnym']);
+        }
+    }
+
     public function clearSession()
     {
         session()->forget(['responseJson', 'success']);
