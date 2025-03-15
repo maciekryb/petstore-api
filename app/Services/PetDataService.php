@@ -4,21 +4,25 @@ namespace App\Services;
 
 class PetDataService
 {
-    public function getCategories()
+    private static array $categories = [
+        ['id' => 1, 'name' => 'Pies'],
+        ['id' => 2, 'name' => 'Kot'],
+        ['id' => 3, 'name' => 'Ptak'],
+    ];
+
+    private static array $tags = [
+        ['id' => 1, 'name' => 'Miły'],
+        ['id' => 2, 'name' => 'Spokojny'],
+        ['id' => 3, 'name' => 'Agresywny'],
+    ];
+
+    public function getCategories(): array
     {
-        return [
-            ['id' => 1, 'name' => 'Pies'],
-            ['id' => 2, 'name' => 'Kot'],
-            ['id' => 3, 'name' => 'Ptak'],
-        ];
+        return self::$categories;
     }
 
-    public function getTags()
+    public function getTags(): array
     {
-        return [
-            ['id' => 1, 'name' => 'Miły'],
-            ['id' => 2, 'name' => 'Spokojny'],
-            ['id' => 3, 'name' => 'Agresywny'],
-        ];
+        return self::$tags;
     }
 }
