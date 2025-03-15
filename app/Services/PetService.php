@@ -7,25 +7,44 @@ use App\Clients\PetApiClient;
 
 class PetService
 {
-    public function __construct(private PetApiClient $petApiClient) {}
+    public function __construct(private PetApiClient $petApiClient, private PetDataService $petDataService) {}
 
     public function store($data)
     {
-        $preparedData =  [
-            // 'id' => $data['id'],
-            'name' => $data['name'],
-            // 'category' => [
-            //     'id' => $data['category_id'],
-            //     'name' => $this->getCategoryName($data['category_id']),
-            // ],
-            'photoUrls' => explode(',', $data['photoUrls']),
-            // 'tags' => $tags,  // Zmieniliśmy na tablicę z tagiem
-            // 'status' => $data['status'],
-        ];
-
-
+        $preparedData = $this->prepareData($data);
 
         $response = $this->petApiClient->store($preparedData);
         return $response;
+    }
+
+    private function prepareData($data)
+    {
+        $preparedData = [
+            'name' => $data['name'],
+            'photoUrls' => explode(',', $data['photoUrls']),
+            'id' => $data['identificationNumber'] ?? null,
+        ];
+
+        if (!empty($data['category_id'])) {
+            $preparedData['category'] = [
+                'id' => $data['category_id'],
+                'name' => $this->petDataService->getCategoryName($data['category_id']),
+            ];
+        }
+
+        if (!empty($data['tag_id'])) {
+            $preparedData['tags'] = [
+                [
+                    'id' => $data['tag_id'],
+                    'name' => $this->petDataService->getTagName($data['tag_id']),
+                ],
+            ];
+        }
+
+        if(!empty($data['status'])) {
+            $preparedData['status'] = $data['status'];
+        }
+
+        return $preparedData;
     }
 }
