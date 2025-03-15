@@ -8,11 +8,11 @@ Route::get('/', function () {
 });
 
 //Main page
-Route::get('/pets', [PetController::class, 'index']);
+Route::get('/pets', [PetController::class, 'index'])->name('pets.index');
 //Form to add new pet
-Route::get('/pets/create', [PetController::class, 'create']);
+Route::get('/pets/create', [PetController::class, 'create'])->name('pets.create');
 //Form to save new pet
-Route::post('/pets', [PetController::class, 'store']);
+Route::post('/pets', [PetController::class, 'store'])->name('pets.store');
 //Form to get pet by id
 Route::get('/pets/{id}', [PetController::class, 'show']);
 //Form to edit pet by id
