@@ -13,8 +13,12 @@ class PetService
     {
         $preparedData = $this->prepareData($data);
 
-        $response = $this->petApiClient->store($preparedData);
-        return $response;
+        return  $this->petApiClient->store($preparedData);
+    }
+
+    public function getById($id)
+    {
+        return $this->petApiClient->getById($id);
     }
 
     private function prepareData($data)
