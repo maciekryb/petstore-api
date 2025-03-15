@@ -14,7 +14,7 @@ Route::get('/pets/create', [PetController::class, 'create'])->name('pets.create'
 //Form to save new pet
 Route::post('/pets', [PetController::class, 'store'])->name('pets.store');
 //Form to get pet by id
-Route::get('/pets/{id}', [PetController::class, 'show']);
+Route::get('/pets/{id}', [PetController::class, 'show'])->name('pets.show');
 //Form to edit pet by id
 Route::get('/pets/{id}/edit', [PetController::class, 'edit']);
 //Form to update pet by id
