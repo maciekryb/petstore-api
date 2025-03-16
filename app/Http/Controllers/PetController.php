@@ -25,25 +25,7 @@ class PetController extends Controller
 
     public function store(Request $request)
     {
-        logger($request->all());
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'photoUrls' => 'required|string',
-            'identificationNumber' => 'sometimes|integer|nullable',
-            'category_id' => 'sometimes|integer',
-            'tag_id' => 'sometimes|integer',
-            'status' => 'sometimes|string',
-        ], [
-            'name.required' => 'Imię jest wymagane.',
-            'photoUrls.required' => 'Adresy zdjęć są wymagane.',
-            'identificationNumber.integer' => 'Numer identyfikacyjny musi być liczbą całkowitą.',
-            'category_id.integer' => 'Wskazana kategoria nie istnieje.',
-            'tag_id.integer' => 'Wskazana tag nie istnieje.',
-        ]);
-
-        logger("po walidacji");
-        logger($validated);
-
+        $validated =  $this->validateAndGetData($request);
         $response = $this->petService->store($validated);
         if ($response) {
             return redirect()->back()->with([
@@ -121,9 +103,30 @@ class PetController extends Controller
 
         return view('pets/edit', compact('tags', 'categories', 'response'));
     }
+
     public function clearSession()
     {
         session()->forget(['responseJson', 'success']);
         return redirect()->route('pets.create');
+    }
+
+    private function validateAndGetData($request){
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'photoUrls' => 'required|string',
+            'id' => 'sometimes|integer|min:1|nullable',
+            'category_id' => 'sometimes|integer',
+            'tag_id' => 'sometimes|integer',
+            'status' => 'sometimes|string',
+        ], [
+            'name.required' => 'Imię jest wymagane.',
+            'photoUrls.required' => 'Adresy zdjęć są wymagane.',
+            'id.integer' => 'Numer identyfikacyjny musi być liczbą całkowitą.',
+            'id.min' => 'Numer identyfikacyjny musi być większy od 0.',
+            'category_id.integer' => 'Wskazana kategoria nie istnieje.',
+            'tag_id.integer' => 'Wskazana tag nie istnieje.',
+        ]);
+
+        return $validated;
     }
 }
