@@ -57,14 +57,14 @@ class PetController extends Controller
 
     public function show($id)
     {
-        $validated = validator(['identificationNumber' => $id], [
-            'identificationNumber' => 'required|integer',
+        $validated = validator(['id' => $id], [
+            'id' => 'required|integer',
         ], [
-            'identificationNumber.required' => 'Numer identyfikacyjny jest wymagany.',
-            'identificationNumber.integer' => 'Wskazany numer identyfikacyjny musi być liczbą.',
+            'id.required' => 'Numer identyfikacyjny jest wymagany.',
+            'id.integer' => 'Wskazany numer identyfikacyjny musi być liczbą.',
         ])->validate();
 
-        $response = $this->petService->getById($validated['identificationNumber']);
+        $response = $this->petService->getById($validated['id']);
         if ($response) {
             return view('pets/show', [
                 'success' => 'Zwierzak znaleziony pomyślnie',
@@ -77,6 +77,26 @@ class PetController extends Controller
                 'response' => null,
                 'error' => 'Nie znaleziono zwierzaka o podanym numerze identyfikacyjnym',
             ]);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $validated = validator(['id' => $id], [
+            'id' => 'required|integer',
+        ], [
+            'id.required' => 'Numer identyfikacyjny jest wymagany.',
+            'id.integer' => 'Wskazany numer identyfikacyjny musi być liczbą.',
+        ])->validate();
+
+        $response = $this->petService->destroy($validated['id']);
+        if ($response) {
+            return redirect()->back()->with([
+                'success' => 'Zwierzak usunięty pomyślnie',
+                'response' => $response,
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'Wystąpił błąd w zewnętrznej usłudze, prosze spróbować później');
         }
     }
 
