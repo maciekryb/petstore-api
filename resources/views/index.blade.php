@@ -12,4 +12,14 @@
             placeholder="Wpisz ID " required>
         <button type="submit" class="btn btn-secondary mt-2">Pokaż szczegóły</button>
     </form>
+
+    @if ($errors->any())
+        <div style="border: 1px solid red; padding: 10px; margin-top: 20px; color: red !important;">
+            <ul style="list-style-type: none; padding: 0; margin: 0;">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 @endsection
