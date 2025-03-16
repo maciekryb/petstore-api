@@ -18,7 +18,7 @@ Route::get('/pets/{id}', [PetController::class, 'show'])->name('pets.show');
 //Form to edit pet by id
 Route::get('/pets/{id}/edit', [PetController::class, 'edit'])->name('pets.edit');
 //Form to update pet by id
-Route::put('/pets/{id}', [PetController::class, 'update']);
+Route::put('/pets/{id}', [PetController::class, 'update'])->name('pets.update');
 //Form to delete pet by id
 Route::delete('/pets/{id}', [PetController::class, 'destroy'])->name('pets.destroy');
 //Clear session
