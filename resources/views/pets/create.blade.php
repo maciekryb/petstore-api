@@ -32,8 +32,7 @@
 
             <div>
                 <label for="id">Numer identyfikacyjny:</label>
-                <input type="number" id="id" name="id" 
-                    value="{{ old('id') }}">
+                <input type="number" id="id" name="id" value="{{ old('id') }}">
             </div>
 
             <div>
@@ -79,7 +78,6 @@
         </form>
 
         <x-validation-errors />
-
     @endif
 
 @endsection
