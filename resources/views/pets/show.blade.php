@@ -28,9 +28,6 @@
                 <button type="submit" class="btn btn-danger">Usuń</button>
             </form>
         </div>
-
-
-
         <x-validation-errors />
     @endif
 @endsection
