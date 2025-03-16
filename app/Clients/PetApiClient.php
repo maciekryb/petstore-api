@@ -51,12 +51,12 @@ class PetApiClient
 
     public function store(array $data)
     {
-        return $this->sendRequest('post', '/pet', $data);
+        return $this->sendRequest('post', "/pet", $data);
     }
 
-    public function edit($id, array $data)
+    public function update(array $data)
     {
-        return $this->sendRequest('put', "/pet/{$id}", $data);
+        return $this->sendRequest('put', "/pet", $data);
     }
 
     public function destroy($id)
