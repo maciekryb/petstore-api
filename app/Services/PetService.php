@@ -12,7 +12,6 @@ class PetService
     public function store($data)
     {
         $preparedData = $this->prepareData($data);
-
         return  $this->petApiClient->store($preparedData);
     }
 
@@ -26,12 +25,18 @@ class PetService
         return $this->petApiClient->destroy($id);
     }
 
+    public function update($data)
+    {
+        $preparedData = $this->prepareData($data);
+        return $this->petApiClient->update($preparedData);
+    }
+
     private function prepareData($data)
     {
         $preparedData = [
             'name' => $data['name'],
             'photoUrls' => explode(',', $data['photoUrls']),
-            'id' => $data['identificationNumber'] ?? null,
+            'id' => $data['id'] ?? null,
         ];
 
         if (!empty($data['category_id'])) {
@@ -50,7 +55,7 @@ class PetService
             ];
         }
 
-        if(!empty($data['status'])) {
+        if (!empty($data['status'])) {
             $preparedData['status'] = $data['status'];
         }
 
