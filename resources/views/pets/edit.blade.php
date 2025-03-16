@@ -6,9 +6,8 @@
     @if (session('response'))
         <h3>Zwierzak zaktualizowany! Poniżej szczegółowe dane:</h3>
         <pre style="background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; overflow-x: auto;">
-    {{ json_encode(session('response'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
-    </pre>
-
+        {{ json_encode(session('response'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
+        </pre>
     @else
         @if (session('error'))
             <div style="border: 1px solid red; padding: 10px; margin-top: 20px; color: red !important;">
@@ -21,8 +20,7 @@
             @method('PUT')
             <div>
                 <label for="name">Imię:</label>
-                <input type="text" id="name" name="name" value="{{ old('name', $response['name'] ?? '') }}"
-                    required>
+                <input type="text" id="name" name="name" value="{{ old('name', $response['name'] ?? '') }}" required>
             </div>
 
             <div>
