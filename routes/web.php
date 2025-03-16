@@ -16,10 +16,10 @@ Route::post('/pets', [PetController::class, 'store'])->name('pets.store');
 //Form to get pet by id
 Route::get('/pets/{id}', [PetController::class, 'show'])->name('pets.show');
 //Form to edit pet by id
-Route::get('/pets/{id}/edit', [PetController::class, 'edit']);
+Route::get('/pets/{id}/edit', [PetController::class, 'edit'])->name('pets.edit');
 //Form to update pet by id
 Route::put('/pets/{id}', [PetController::class, 'update']);
 //Form to delete pet by id
-Route::delete('/pets/{id}', [PetController::class, 'destroy']);
+Route::delete('/pets/{id}', [PetController::class, 'destroy'])->name('pets.destroy');
 //Clear session
 Route::post('/pets/clear-session', [PetController::class, 'clearSession'])->name('pets.clearSession');
