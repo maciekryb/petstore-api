@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 
 class PetController extends Controller
 {
-    public function __construct(private PetService $petService) {}
+    public function __construct(private PetService $petService, private PetDataService $petDataService) {}
 
     public function index()
     {
         return view('index');
     }
 
-    public function create(PetDataService $petDataService)
+    public function create()
     {
-        $categories = $petDataService->getCategories();
-        $tags = $petDataService->getTags();
+        $categories = $this->petDataService->getCategories();
+        $tags = $this->petDataService->getTags();
 
         return view('pets/create', compact('categories', 'tags'));
     }
@@ -100,6 +100,27 @@ class PetController extends Controller
         }
     }
 
+    public function edit(Request $request, $id)
+    {
+
+        $validated = validator(['id' => $id], [
+            'id' => 'required|integer',
+        ], [
+            'id.required' => 'Numer identyfikacyjny jest wymagany.',
+            'id.integer' => 'Wskazany numer identyfikacyjny musi być liczbą.',
+        ])->validate();
+
+        $response = $this->petService->getById($validated['id']);
+
+        if(!$response){
+            return redirect()->back()->with('error', 'Nie znaleziono zwierzaka o podanym numerze identyfikacyjnym');
+        }
+
+        $categories = $this->petDataService->getCategories();
+        $tags = $this->petDataService->getTags();
+
+        return view('pets/edit', compact('tags', 'categories', 'response'));
+    }
     public function clearSession()
     {
         session()->forget(['responseJson', 'success']);
