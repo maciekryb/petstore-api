@@ -31,9 +31,9 @@
             </div>
 
             <div>
-                <label for="identificationNumber">Numer identyfikacyjny:</label>
-                <input type="number" id="identificationNumber" name="identificationNumber" min="1"
-                    value="{{ old('identificationNumber') }}">
+                <label for="id">Numer identyfikacyjny:</label>
+                <input type="number" id="id" name="id" 
+                    value="{{ old('id') }}">
             </div>
 
             <div>
