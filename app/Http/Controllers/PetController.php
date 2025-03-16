@@ -104,6 +104,20 @@ class PetController extends Controller
         return view('pets/edit', compact('tags', 'categories', 'response'));
     }
 
+    public function update(Request $request)
+    {
+        $validated =  $this->validateAndGetData($request);
+        $response = $this->petService->update($validated);
+        if ($response) {
+            return redirect()->back()->with([
+                'success' => 'Zwierzak zaktualizowany pomyślnie',
+                'response' => $response,
+            ]);
+        } else {
+            return redirect()->back()->withInput()->with('error', 'Wystąpił błąd w zewnętrznej usłudze, prosze spróbować później');
+        }
+    }
+
     public function clearSession()
     {
         session()->forget(['responseJson', 'success']);
