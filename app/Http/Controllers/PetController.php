@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\PetDataService;
 use App\Services\PetService;
-// use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Request;
 
 class PetController extends Controller
@@ -27,7 +26,6 @@ class PetController extends Controller
     public function store(Request $request)
     {
         logger($request->all());
-        // Walidacja danych z formularza
         $validated = $request->validate([
             'name' => 'required|string',
             'photoUrls' => 'required|string',
@@ -50,7 +48,7 @@ class PetController extends Controller
         if ($response) {
             return redirect()->back()->with([
                 'success' => 'Zwierzak dodany pomyślnie',
-                'responseJson' => json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+                'response' => $response,
             ]);
         } else {
             return redirect()->back()->withInput()->with('error', 'Wystąpił błąd w zewnętrznej usłudze, prosze spróbować później');
@@ -70,10 +68,15 @@ class PetController extends Controller
         if ($response) {
             return view('pets/show', [
                 'success' => 'Zwierzak znaleziony pomyślnie',
-                'responseJson' => $response
+                'response' => $response,
+                'error' => null,
             ]);
         } else {
-            return view('pets/show', ['error' => 'Nie znaleziono zwierzaka o podanym numerze identyfikacyjnym']);
+            return view('pets/show', [
+                'success' => null,
+                'response' => null,
+                'error' => 'Nie znaleziono zwierzaka o podanym numerze identyfikacyjnym',
+            ]);
         }
     }
 
