@@ -3,10 +3,10 @@
 @section('content')
     <h2>Dodaj nowego zwierzaka</h2>
 
-    @if (session('responseJson'))
+    @if (session('response'))
         <h3>Zwierzak dodany! Poniżej szczegółowe dane:</h3>
         <pre style="background-color: #f4f4f4; padding: 10px; border: 1px solid #ddd; overflow-x: auto;">
-        {{ session('responseJson') }}
+        {{ json_encode(session('response'), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
         </pre>
 
         <form action="{{ route('pets.clearSession') }}" method="POST" style="margin-top: 20px;">
