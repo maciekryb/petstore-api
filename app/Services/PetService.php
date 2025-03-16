@@ -21,6 +21,11 @@ class PetService
         return $this->petApiClient->getById($id);
     }
 
+    public function destroy($id)
+    {
+        return $this->petApiClient->destroy($id);
+    }
+
     private function prepareData($data)
     {
         $preparedData = [
