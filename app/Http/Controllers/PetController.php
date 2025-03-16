@@ -92,7 +92,7 @@ class PetController extends Controller
         $response = $this->petService->destroy($validated['id']);
         if ($response) {
             return redirect()->back()->with([
-                'success' => 'Zwierzak usunięty pomyślnie',
+                'deleted' => 'Zwierzak usunięty pomyślnie',
                 'response' => $response,
             ]);
         } else {
